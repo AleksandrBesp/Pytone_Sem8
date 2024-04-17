@@ -1,4 +1,6 @@
 from ast import Break
+from distutils.command import clean
+from turtle import clear
 from logger import input_data, print_data, changing_data, deleting_data, search_data
 
 
@@ -14,23 +16,25 @@ def interface():
 
     if command == 1:
         input_data()
+        print(f"\n\n")
         interface()
     elif command == 2:
         print_data()
+        print(f"\n\n")
         interface()
     elif command == 3:
         changing_data()
+        print(f"\n\n")
         interface()
     elif command == 4:
         deleting_data()
+        print(f"\n\n")
         interface()
     elif command == 5:
         search_data()
+        print(f"\n\n")
         interface()
     elif command == 6:
         Break
 
 interface()
-
-
-
