@@ -24,52 +24,105 @@ def input_data():
 
     if var == 1:
         with open(file_1, 'a', encoding = 'utf-8') as f: 
-            f.write(f"{name} | {surname} | {phone} | {address}\n\n")
+            f.write(f"{name} | {surname} | {phone} | {address} \n\n")
     elif var == 2:
             with open(file_2, 'a', encoding = 'utf-8') as f:
-                f.write(f"{name}; {surname}; {phone}; {address}\n\n") 
+                f.write(f"{name}; {surname}; {phone}; {address} \n\n") 
 
 def print_data():
     var = int(input('Выберите  файл который желаете открыть для просмотра: \n'
     f'1) {file_1} \n'
-    f'2) {file_2}\n'
+    f'2) {file_2} \n'
     f'3) Оба файла\n'
-    f'Введите № команды: '))   
+    f'Введите № команды: '))
+
     while var != 1 and var != 2 and var != 3:
         print("Некорректный ввод!")
         var = int(input('Введите № команды: '))
+
     if var == 1 or var == 3:
         print('Вывожу данные из 1 файла:\n')
         with open(file_1, 'r', encoding = 'utf-8') as f:
             data_1 = f.readlines()
             print(*data_1)
+
     if var == 2 or var == 3:    
         print('Вывожу данные из 2 файла:\n')
         with open(file_2, 'r', encoding = 'utf-8') as f:
             data_2 = f.readlines()
             print(*data_2)
 
-def copy_file(file_1, file_2):
-    pass
-    
-
+# def copy_file():
+#     with open(file_1, 'r', encoding = 'utf-8') as f:
+#         list_copy1 = []
+#         for i in f:
+#             list_copy1.append(i)
+#     with open(file_2, 'r', encoding = 'utf-8') as f:
+#         list_copy2 = []
+#         for i in f:
+#             list_copy2.append(i)    
+#     return list_copy1, list_copy2
 
 def changing_data():
     search_data()
-    chang_data = input('скопируйте выше контакт который желаете редактировать в консоль: \n')
+    chang_data = input('Скопируйте в консоль контакт который желаете редактировать : \n')
+    with open(file_1, 'r', encoding='utf-8') as f:
+        list_copy1 = f.readlines()
+    with open(file_2, 'r', encoding='utf-8') as f:
+        list_copy2 = f.readlines()
     
+    with open(file_1, 'w', encoding='utf-8') as f:
+        for i in list_copy1:
+            if chang_data in i:
+                name = name_data()
+                surname = surname_data()
+                phone = phone_data()
+                address = address_data()
+                f.write(f'{name} | {surname} | {phone} | {address}\n')
+            if chang_data not in i:
+                f.write(i)
 
+    with open(file_2, 'w', encoding='utf-8') as f:
+        for i in list_copy2:
+            if chang_data in i:
+                name = name_data()
+                surname = surname_data()
+                phone = phone_data()
+                address = address_data()
+                f.write(f'{name}; {surname}; {phone}; {address}\n')
+            if chang_data not in i:
+                f.write(i)
+
+    print(f'\n Изменения в контакте произведены...')
     
 
 def deleting_data():
-    search_data()
-    del_info = input('скопируйте выше контакт который желаете уддалить в консоль: \n') 
-    with open(file_1, 'w', encoding = 'utf-8') as f:
-        pass
-              
-    with open(file_2, 'w', encoding = 'utf-8') as f:
-        pass
-
+    search_data()  
+    del_info = input('Скопируйте в консоль контакт который желаете удалить: \n')
+    with open(file_1, 'r', encoding='utf-8') as f:
+        list_copy1 = f.readlines()
+    with open(file_2, 'r', encoding='utf-8') as f:
+        list_copy2 = f.readlines()
+    
+    with open(file_1, 'w', encoding='utf-8') as f:
+        i = 0
+        while i < len(list_copy1):  # Чтобы не выйти за пределы списка, -1
+            if del_info in list_copy1[i]:
+                i += 2  # Пропускаем искомую строку и следующую за ней строку
+            else:
+                f.write(list_copy1[i])
+                i += 1
+    
+    with open(file_2, 'w', encoding='utf-8') as f:
+        i = 0
+        while i < len(list_copy2):  # Чтобы не выйти за пределы списка, -1
+            if del_info in list_copy2[i]:
+                i += 2  # Пропускаем искомую строку и следующую за ней строку
+            else:
+                f.write(list_copy2[i])
+                i += 1
+    
+    print('Выбранный контакт удален.')
 
 def search_data():
     print('Выберите  файл в котором желаете осуществить поиск контакта: \n'
@@ -80,8 +133,8 @@ def search_data():
     while var != 1 and var != 2 and var != 3:
         print("Некорректный ввод!")
         var = int(input('Введите № команды: '))
-    if var == 1 or var == 3:
-        get_info = input('Введите данные для поиска: \n')    
+    get_info = input('Введите данные для поиска: \n') 
+    if var == 1 or var == 3:           
         with open(file_1, 'r', encoding = 'utf-8') as f:
             count1 = 0
             for i in f:
@@ -89,7 +142,7 @@ def search_data():
                 for word in words:
                     if word.lower() == get_info.lower():
                         count1+=1
-                        print(f'По поиску в файле "data_1_var" Совпадение {count1}:\n {i}')
+                        print(f'Совпадение по поиску в файле {file_1}:\n {i}\n')
         
     if var == 2 or var == 3:
         with open(file_2, 'r', encoding = 'utf-8') as f:
@@ -99,7 +152,7 @@ def search_data():
                 for word in words:
                     if word.lower() == get_info.lower():
                         count2+=1
-                        print(f'По поиску в файле "data_2_var" Совпадение {count2}:\n {j}')
+                        print(f'Совпадение по поиску в файле {file_2}:\n {j}\n')
         
     if count1 == 0 and count2 == 0:
         print(f'По вашему поиску нет данных.')

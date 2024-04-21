@@ -12,7 +12,7 @@ def interface():
 
     while command != 1 and command != 2 and command != 3 and command != 4 and command != 5 and command != 6:
         print("Некорректный ввод!")
-        comand = int(input('Введите число в соответствии с выбранной командой: '))
+        command = int(input('Введите число в соответствии с выбранной командой: '))
 
     if command == 1:
         input_data()
@@ -26,7 +26,7 @@ def interface():
         changing_data()
         print(f"\n\n")
         interface()
-    elif command == 4:
+    elif command == 4:     
         deleting_data()
         print(f"\n\n")
         interface()
